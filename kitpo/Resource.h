@@ -23,13 +23,19 @@
 #define ID_BUTTON1			200
 #define ID_BUTTON2			201
 #define ID_BUTTON3			202
-#define ID_BUTTON4			203
-#define ID_BUTTON5			204
-#define ID_BUTTON6			205
+#define Reposition			203
+#define OpenFile			204
+#define SaveFile			205
+
 #define ID_TEXTBOX1			300
 #define ID_TEXTBOX2			301
 #define ID_TEXTBOX3			302
 #define ID_TEXTBOX4			303
+
+#define ID_Text				400
+#define ID_Text1			401
+#define ID_Text2			402
+#define ID_Text3			403
 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
