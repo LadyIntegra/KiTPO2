@@ -20,9 +20,6 @@
 // Следующие стандартные значения для новых объектов
 //
 
-#define ID_BUTTON1			200
-#define ID_BUTTON2			201
-#define ID_BUTTON3			202
 #define Reposition			203
 #define OpenFile			204
 #define SaveFile			205
