@@ -103,6 +103,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    hWnd = CreateWindow(szWindowClass, _T("Программа"), WS_OVERLAPPEDWINDOW,
 	   300, 50, 660, 430, NULL, NULL, hInstance, NULL);
    if (!hWnd)
+
    {
       return FALSE;
    }
@@ -145,8 +146,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			270, 45, 85, 15, hWnd, (HMENU)ID_Text1, NULL, NULL);
 		CreateWindow(_T("STATIC"), _T("Введите L:"), WS_CHILD | WS_VISIBLE,
 			270, 110, 85, 15, hWnd, (HMENU)ID_Text2, NULL, NULL);
-		CreateWindow(_T("STATIC"), _T("Результат инверсии:"), WS_CHILD | WS_VISIBLE,
-			390, 15, 140, 15, hWnd, (HMENU)ID_Text3, NULL, NULL);
+		CreateWindow(_T("STATIC"), _T("Результат:"), WS_CHILD | WS_VISIBLE,
+			390, 15, 80, 15, hWnd, (HMENU)ID_Text3, NULL, NULL);
 
 		EditIntput = CreateWindow(_T("EDIT"), NULL, WS_BORDER | WS_VISIBLE | WS_CHILD | ES_LEFT | ES_MULTILINE | WS_VSCROLL | WS_HSCROLL,
 			20, 45, 220, 200, hWnd, (HMENU)ID_TEXTBOX2, NULL, NULL);
@@ -177,7 +178,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			
 			size = Edit_GetText(EditK, buf2, MAX_WORD_LENGTH);
 			buf2[size] = 0;
-			if (size == 0) { MessageBox(hWnd, _T("Введите значение K"), _T("Ошибка 1"), MB_OK); break; }
+			if (size == 0) { MessageBox(hWnd, _T("Поле ввода значения К не может быть пустым! \nВведите значение K"), _T("Ошибка 1"), MB_OK); break; }
 			i = 0;
 			while (buf2[i] >= '0' && buf2[i] <= '9') i++;
 			if (i != size) { MessageBox(hWnd, _T("Внимание! \nЗначение К должно быть целым положительным числом!"), _T("Ошибка 2"), MB_OK); break; }
@@ -185,17 +186,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			
 			size = Edit_GetText(EditL, buf2, MAX_WORD_LENGTH);
 			buf2[size] = 0;
-			if (size == 0) { MessageBox(hWnd, _T("Введите значение L"), _T("Ошибка 3"), MB_OK); break; }
+			if (size == 0) { MessageBox(hWnd, _T("Поле ввода значения L не может быть пустым! \nВведите значение L"), _T("Ошибка 3"), MB_OK); break; }
 			i = 0;
 			while (buf2[i] >= '0' && buf2[i] <= '9') i++;
 			if (i != size) { MessageBox(hWnd, _T("Внимание! \nЗначение L должно быть целым положительным числом!"), _T("Ошибка 4"), MB_OK); break; }
 			l = _ttoi(buf2) - 1;
 
 			n = Edit_GetLineCount(EditIntput);
+
+
 			
-			if (!Edit_GetTextLength(EditIntput)) { MessageBox(hWnd, _T("Нет массива для перестановки! \nПопытайтесь ввести массив снова"), _T("Ошибка 5"), MB_OK); break; }
+			if (!Edit_GetTextLength(EditIntput)) { MessageBox(hWnd, _T("Нет массива для перестановки! \nПопытайтесь ввести или загрузить массив снова"), _T("Ошибка 5"), MB_OK); break; }
 			else if (n <= l) { MessageBox(hWnd, _T("Внимание! \nЗначение L не может быть больше, \nчем количество строк в массиве"), _T("Ошибка 6"), MB_OK); break; }
-			else if (k > l) { MessageBox(hWnd, _T("Внимание! \nЗначение K не должно быть больше значения L"), _T("Ошибка 7"), MB_OK); break; }
+			else if (n > MAX_WORD_COUNT) { MessageBox(hWnd, _T("Превышен лимит строк"), _T("Ошибка 12"), MB_OK); break; }
+			else if (k >= l) { MessageBox(hWnd, _T("Внимание! \nЗначение K не должно быть больше или равно значению L"), _T("Ошибка 7"), MB_OK); break; }
 			else if (k == -1) { MessageBox(hWnd, _T("Внимание! \nЗначение K не может быть равным нулю"), _T("Ошибка 8"), MB_OK); break; }
 //			else if (l == -1) { MessageBox(hWnd, _T("L = 0"), _T("Ошибка 9"), MB_OK); break; }
 			else
@@ -206,7 +210,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					size = Edit_GetLine(EditIntput, i, buf2, MAX_WORD_LENGTH);				
 					if (size == MAX_WORD_LENGTH)
 					{
-						MessageBox(hWnd, _T("Внимание! \nПревышен интервал вводимого значения"), _T("Ошибка 9"), MB_OK);
+						MessageBox(hWnd, _T("Превышен интервал вводимого значения"), _T("Ошибка 9"), MB_OK);
 						return 0;
 					}
 					
@@ -220,7 +224,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					size = Edit_GetLine(EditIntput, i, buf2, MAX_WORD_LENGTH);
 					if (size == MAX_WORD_LENGTH)
 					{
-						MessageBox(hWnd, _T("Внимание! \nПревышен интервал вводимого значения"), _T("Ошибка 9"), MB_OK);
+						MessageBox(hWnd, _T("Превышен интервал вводимого значения"), _T("Ошибка 9"), MB_OK);
 						return 0;
 					}
 						
@@ -234,7 +238,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					size = Edit_GetLine(EditIntput, i, buf2, MAX_WORD_LENGTH);
 					if (size == MAX_WORD_LENGTH)
 					{
-						MessageBox(hWnd, _T("Внимание! \nПревышен интервал вводимого значения"), _T("Ошибка 9"), MB_OK);
+						MessageBox(hWnd, _T("Превышен интервал вводимого значения"), _T("Ошибка 9"), MB_OK);
 						return 0;
 					}
 					
@@ -254,8 +258,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 
 		case OpenFile:
-			_tfopen_s(&file,_T("input.txt"), _T("r"));
-			if (file == 0) { MessageBox(hWnd, _T("Внимание! \nНе удалось открыть файл \"input.txt\" "), _T("Ошибка 10"), MB_OK); break; }
+			HANDLE hFile;
+			hFile = CreateFile(_T("input.txt"), GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+			if (INVALID_HANDLE_VALUE == hFile)
+			{
+				MessageBox(hWnd, _T("Внимание! \nНе удалось открыть файл \"input.txt\" "), _T("Ошибка 10"), MB_OK); break; 
+			}
+			DWORD size;
+			size = GetFileSize(hFile, NULL);
+			CloseHandle(hFile);
+			if (size == 0)	{ MessageBox(hWnd, _T("Файл \"input.txt\" пуст "), _T("Ошибка 13"), MB_OK); break; }
+			
+			_tfopen_s(&file, _T("input.txt"), _T("r"));
+			if (file == 0) { MessageBox(hWnd, _T("Не удалось открыть файл \"input.txt\" "), _T("Ошибка 10"), MB_OK); break; }
+
 			buf1[0] = 0;
 			while (!feof(file))
 			{
@@ -273,7 +289,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case SaveFile:
 			_tfopen_s(&file, _T("output.txt"), _T("wt"));
-			if (file == 0) { MessageBox(hWnd, _T("Внимание! \nНе удалось открыть файл \"output.txt\""), _T("Ошибка 11"), MB_OK); break; }
+			if (file == 0) { MessageBox(hWnd, _T("Не удалось открыть файл \"output.txt\""), _T("Ошибка 11"), MB_OK); break; }
 
 			size = Edit_GetText(EditOutput, buf1, MAX_WORD_COUNT*MAX_WORD_LENGTH);
 			buf1[size] = 0;
