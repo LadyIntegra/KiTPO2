@@ -133,9 +133,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	int i, n, k, l;
 	TCHAR buf1[MAX_WORD_COUNT * MAX_WORD_LENGTH];
 	TCHAR buf2[MAX_WORD_LENGTH];
+	char print[256];
 	int size;
 	FILE *file;
-
+	
 	switch (message)
 	{
 	case WM_CREATE:
@@ -197,6 +198,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			
 			if (!Edit_GetTextLength(EditIntput)) { MessageBox(hWnd, _T("Нет массива для перестановки! \nПопытайтесь ввести или загрузить массив снова"), _T("Ошибка 5"), MB_OK); break; }
+			else if (n == 1) { MessageBox(hWnd, _T("Внимание! \nМассив должен содержать более 1 элемента \nПожалуйста, добавьте элементы массива"), _T("Ошибка 14"), MB_OK); break; }
 			else if (n <= l) { MessageBox(hWnd, _T("Внимание! \nЗначение L не может быть больше, \nчем количество строк в массиве"), _T("Ошибка 6"), MB_OK); break; }
 			else if (n > MAX_WORD_COUNT) { MessageBox(hWnd, _T("Превышен лимит строк"), _T("Ошибка 12"), MB_OK); break; }
 			else if (k >= l) { MessageBox(hWnd, _T("Внимание! \nЗначение K не должно быть больше или равно значению L"), _T("Ошибка 7"), MB_OK); break; }
@@ -210,7 +212,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					size = Edit_GetLine(EditIntput, i, buf2, MAX_WORD_LENGTH);				
 					if (size == MAX_WORD_LENGTH)
 					{
-						MessageBox(hWnd, _T("Превышен интервал вводимого значения"), _T("Ошибка 9"), MB_OK);
+						sprintf_s(print, "Превышен интервал вводимого значения при вводе массива в %d ой строке", i + 1 );
+						MessageBoxA(hWnd, print, "Ошибка 9", MB_OK);
 						return 0;
 					}
 					
@@ -224,7 +227,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					size = Edit_GetLine(EditIntput, i, buf2, MAX_WORD_LENGTH);
 					if (size == MAX_WORD_LENGTH)
 					{
-						MessageBox(hWnd, _T("Превышен интервал вводимого значения"), _T("Ошибка 9"), MB_OK);
+						sprintf_s(print, "Превышен интервал вводимого значения при вводе массива в %d ой строке", i + 1);
+						MessageBoxA(hWnd, print, "Ошибка 9", MB_OK);
 						return 0;
 					}
 						
@@ -238,7 +242,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					size = Edit_GetLine(EditIntput, i, buf2, MAX_WORD_LENGTH);
 					if (size == MAX_WORD_LENGTH)
 					{
-						MessageBox(hWnd, _T("Превышен интервал вводимого значения"), _T("Ошибка 9"), MB_OK);
+						sprintf_s(print, "Превышен интервал вводимого значения при вводе массива в %d ой строке", i + 1);
+						MessageBoxA(hWnd, print, "Ошибка 9", MB_OK);
 						return 0;
 					}
 					
